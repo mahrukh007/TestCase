@@ -1,0 +1,57 @@
+import static org.testng.AssertJUnit.assertEquals;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import junit.framework.Assert;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+
+public class test1 {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver","C:/Users/Mahrukh/Videos/2017/chromedriver.exe");
+		WebDriver driver = new ChromeDriver(); 
+		//driver.manager().
+		driver.manage().window().maximize(); 
+		driver.get("http://live.guru99.com/");
+		int scc = 0;
+		
+		//Step # 2: Verify Title of the page
+		String demoSite  = driver.findElement(By.cssSelector("h2")).getText();
+	    System.out.println(demoSite);
+	    
+		 Assert.assertEquals("First Condition true", demoSite, "THIS IS DEMO SITE FOR   ");
+	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
+		//Step # 3: Click on mobile menu
+	    driver.findElement(By.linkText("MOBILE")).click();
+	    
+		//Step # 4: Verify title of the page
+	    String actualTitle  = driver.findElement(By.cssSelector("h1")).getText();
+	    System.out.println(actualTitle);
+	   /* String actualTitle = driver.getTitle();
+	    String expectedTitle = "MOBILE";*/
+	    Assert.assertEquals("Second Condition true", actualTitle, "MOBILE");
+	    
+		//Step # 5: In the list, select 'name' as drop down
+	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
+	    new Select(driver.findElement(By.xpath("//*[@id=\"top\"]/body"
+	    		+ "/div/div/div[2]/div/div[2]/div[1]/div[3]/div[1]/div[1]/div/select"))).selectByVisibleText("Name");
+	  
+		//Step # 6: Verify all products are sorted by name 
+	    scc = (scc+1);
+	  		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+	  		String png = ("C:\\Users\\Mahrukh\\Videos\\2017\\Mobile" + scc + ".png");
+	  		FileUtils.copyFile(scrFile, new File(png));
+		
+		
+	}
+
+}
