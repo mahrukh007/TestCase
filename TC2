@@ -1,0 +1,60 @@
+import static org.testng.AssertJUnit.assertEquals;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import junit.framework.Assert;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+
+public class test1 {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver","C:/Users/Mahrukh/Videos/2017/chromedriver.exe");
+		WebDriver driver = new ChromeDriver(); 
+		//driver.manager().
+		driver.manage().window().maximize(); 
+		
+		//Step # 1: Go to live.guru99
+		driver.get("http://live.guru99.com/");
+		
+		//Step # 2: Go to Mobile menu
+		driver.findElement(By.linkText("MOBILE")).click();
+		
+		//Step # 3: Read cost of sony xperia 
+		String actual = driver.findElement(By.className("price")).getText(); 
+		System.out.println(actual);
+		
+		//Step # 4: Click on sony xperia Mobile 
+		driver.findElement(By.linkText("SONY XPERIA")).click();
+		
+		//Step # 5: Read sony xperia mobile from detail page 
+		String expected = driver.findElement(By.className("price")).getText();
+		System.out.println(expected);
+	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
+		
+		//Step # 6: Compare value is step 3 and 5 
+		/*//Assert.assertEquals("Cost is equal", SonyXperiaCost, "$100.00");
+	    String message = "Cost is equal";
+		Assert.assertEquals(message, expected, actual);
+		//Assert.assertEquals("cost is equal", SonyXperiaCost, SonyXperiaCost);	
+*/		    
+	    try {
+	        assertEquals(actual, expected); 
+	      } catch (Exception e) {
+	    	  e.printStackTrace();
+	      }
+	    
+	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
+		driver.quit();
+		
+	}
+
+}
