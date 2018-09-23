@@ -1,2 +1,2 @@
-# TestCase1
+# TestCase
 Guru99Practice
